@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loom — Online Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fafafa;--ink:#0f0f10;--muted:#76767c;--line:#e8e8ea}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+  .reveal{opacity:0;transform:translateY(22px);transition:.8s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,5vw,56px);border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(250,250,250,.85);backdrop-filter:blur(10px);z-index:10}
+  .logo{font-weight:800;font-size:22px;letter-spacing:-.02em}
+  .nlinks{display:flex;gap:30px;font-size:14px;color:var(--muted)}
+  .cart{font-weight:600;font-size:14px;border:1px solid var(--ink);padding:9px 18px;border-radius:100px}
+  @media(max-width:680px){.nlinks{display:none}}
+  .anno{background:var(--ink);color:#fff;text-align:center;font-size:13px;font-weight:600;padding:9px;letter-spacing:.02em}
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;padding:clamp(40px,7vw,90px) clamp(20px,5vw,56px);max-width:1200px;margin:0 auto}
+  @media(max-width:760px){.hero{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  .hero p{color:var(--muted);font-size:18px;margin:22px 0 30px;max-width:420px}
+  .hbtn{display:inline-block;background:var(--ink);color:#fff;font-weight:600;padding:15px 34px;border-radius:100px;transition:.2s}.hbtn:hover{opacity:.85}
+  .hero-img{aspect-ratio:1;border-radius:24px;overflow:hidden;background:#eee}
+  .hero-img img{width:100%;height:100%;object-fit:cover}
+  .bar{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600}
+  section{max-width:1200px;margin:0 auto;padding:clamp(50px,7vw,90px) clamp(20px,5vw,56px)}
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:680px){.cats{grid-template-columns:1fr}}
+  .cat{aspect-ratio:3/2;border-radius:18px;display:flex;align-items:flex-end;padding:22px;font-weight:800;font-size:20px;color:#fff;position:relative;overflow:hidden;transition:.3s}
+  .cat:hover{transform:translateY(-4px)}
+  .cat::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent 60%)}
+  .cat span{position:relative;z-index:2}
+  .cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .shead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px}
+  .shead h2{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-.02em}
+  .shead a{color:var(--muted);font-weight:600;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
+  .prod .ph{aspect-ratio:1;border-radius:16px;margin-bottom:14px;overflow:hidden;background:#eee;transition:transform .3s}
+  .prod .ph img{width:100%;height:100%;object-fit:cover}
+  .prod:hover .ph{transform:translateY(-5px)}
+  .prod h3{font-size:16px;font-weight:600}.prod .pr{color:var(--muted);font-weight:600;font-size:15px;margin-top:2px}
+  .reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .rev{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+  .rev .st{color:#f5a623;letter-spacing:2px;margin-bottom:12px}.rev p{font-size:15px}.rev .who{color:var(--muted);font-size:13px;margin-top:14px;font-weight:600}
+  .news{background:var(--ink);color:#fff;border-radius:26px;text-align:center;padding:clamp(40px,6vw,70px)}
+  .news h2{font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-.02em}.news p{opacity:.7;margin:12px 0 26px}
+  .news .form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .news input{padding:14px 18px;border-radius:100px;border:none;min-width:240px;font-family:inherit}
+  .news button{background:#fff;color:var(--ink);font-weight:700;padding:14px 26px;border-radius:100px;border:none;font-family:inherit;cursor:pointer}
+  footer{border-top:1px solid var(--line);text-align:center;padding:40px;color:var(--muted);font-size:14px}
+</style></head>
+<body>
+  <div class="anno">Free shipping on orders over $50 — this week only ✦</div>
+  <nav><div class="logo">loom.</div><div class="nlinks"><a>Shop</a><a>New</a><a>About</a></div><div class="cart">Cart · 2</div></nav>
+  <div class="hero">
+    <div class="reveal"><h1>Goods made to last.</h1><p>Thoughtfully designed everyday objects — small batches, honest materials, free shipping over $50.</p><a class="hbtn">Shop the collection</a></div>
+    <div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt=""></div>
+  </div>
+  <div class="bar"><span>FREE SHIPPING $50+</span><span>30-DAY RETURNS</span><span>CARBON-NEUTRAL</span></div>
+
+  <section>
+    <div class="shead reveal"><h2>Shop by category</h2></div>
+    <div class="cats reveal">
+      <div class="cat"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80"><span>Audio</span></div>
+      <div class="cat"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=700&q=80"><span>Accessories</span></div>
+      <div class="cat"><img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=700&q=80"><span>Home</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead reveal"><h2>Best sellers</h2><a>View all →</a></div>
+    <div class="grid reveal">
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"></div><h3>Minimalist Watch</h3><div class="pr">$129</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=80"></div><h3>Studio Headphones</h3><div class="pr">$199</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=500&q=80"></div><h3>Acetate Sunglasses</h3><div class="pr">$95</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=500&q=80"></div><h3>Ceramic Mug</h3><div class="pr">$24</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=500&q=80"></div><h3>Eau de Parfum</h3><div class="pr">$78</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80"></div><h3>Wireless Speaker</h3><div class="pr">$149</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1542219550-37153d387c27?auto=format&fit=crop&w=500&q=80"></div><h3>Everyday Sneaker</h3><div class="pr">$140</div></div>
+      <div class="prod"><div class="ph"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80"></div><h3>Instant Camera</h3><div class="pr">$89</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead reveal"><h2>Loved by thousands</h2></div>
+    <div class="reviews reveal">
+      <div class="rev"><div class="st">★★★★★</div><p>"Beautiful quality and it arrived in two days. The watch is my new favorite."</p><div class="who">Sarah K.</div></div>
+      <div class="rev"><div class="st">★★★★★</div><p>"Everything feels considered. You can tell they care about the little details."</p><div class="who">Marcus T.</div></div>
+      <div class="rev"><div class="st">★★★★★</div><p>"Gorgeous packaging, fast shipping, and the speaker sounds incredible."</p><div class="who">Priya R.</div></div>
+    </div>
+  </section>
+
+  <section><div class="news reveal">
+    <h2>Get 10% off your first order</h2><p>Join the list for new drops and members-only deals.</p>
+    <div class="form"><input placeholder="you@email.com"><button>Subscribe</button></div>
+  </div></section>
+  <footer>© 2026 Loom · Free shipping on orders over $50</footer>
+
+  <script>
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+    document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+  </script>
+</body></html>

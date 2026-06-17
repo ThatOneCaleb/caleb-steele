@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caleb Steele — Web Design</title>
+<meta name="description" content="Modern, fast, beautiful websites for local businesses. Designed and built by Caleb Steele." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --soft:#f6f7f9;
+    --fg:#0b0c0e;
+    --muted:#6b7280;
+    --line:rgba(0,0,0,.10);
+    --a1:#6d5cff;   /* violet */
+    --a2:#08b2c4;   /* teal   */
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);color:var(--fg);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;line-height:1.5;
+  }
+  ::selection{background:var(--a1);color:#fff}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.05}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px clamp(20px,5vw,56px);
+    backdrop-filter:blur(12px);
+    background:linear-gradient(to bottom,rgba(255,255,255,.8),transparent);
+  }
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .brand span{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .navlinks{display:flex;gap:32px;font-size:14px;color:var(--muted)}
+  .navlinks a{transition:color .2s}.navlinks a:hover{color:var(--fg)}
+  @media(max-width:640px){.navlinks{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;height:100svh;min-height:640px;display:flex;align-items:center;justify-content:center;text-align:center}
+  #scene{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .hero-inner{position:relative;z-index:2;padding:0 24px;pointer-events:none;max-width:900px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--line);border-radius:100px;padding:7px 16px;margin-bottom:28px;
+    background:rgba(255,255,255,.6);backdrop-filter:blur(4px)
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--a2);box-shadow:0 0 12px var(--a2)}
+  .hero h1{font-size:clamp(40px,8vw,86px);margin-bottom:22px}
+  .hero h1 em{font-style:normal;background:linear-gradient(100deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:560px;margin:0 auto 38px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;pointer-events:auto}
+  .btn{
+    font-family:'Space Grotesk';font-weight:600;font-size:15px;
+    padding:14px 28px;border-radius:100px;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:1px solid transparent
+  }
+  .btn-primary{background:linear-gradient(100deg,var(--a1),var(--a2));color:#fff;box-shadow:0 10px 30px -10px var(--a1)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -10px var(--a1)}
+  .btn-ghost{border-color:var(--line);color:var(--fg);background:rgba(255,255,255,.6)}
+  .btn-ghost:hover{background:rgba(0,0,0,.04);transform:translateY(-2px)}
+  .scrollhint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.7;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ---------- generic section ---------- */
+  section.block{max-width:var(--max);margin:0 auto;padding:clamp(80px,12vw,140px) clamp(20px,5vw,40px)}
+  .label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--a1);margin-bottom:16px;font-weight:600}
+  .lead{font-size:clamp(26px,4vw,44px);max-width:720px;margin-bottom:18px}
+  .sub{color:var(--muted);max-width:560px;font-size:17px}
+
+  /* work grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:56px}
+  .card{
+    position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:var(--bg);transition:transform .35s,box-shadow .35s,border-color .35s;
+    box-shadow:0 1px 2px rgba(0,0,0,.04)
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(0,0,0,.25);border-color:rgba(0,0,0,.16)}
+  .card .thumb{aspect-ratio:16/10;background-size:cover;background-position:top center;border-bottom:1px solid var(--line)}
+  .card .meta{padding:16px 20px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .card .meta h3{font-size:17px;margin-bottom:3px}
+  .card .meta span.d{font-size:13px;color:var(--muted)}
+  .card .live{font-size:12px;font-weight:600;color:var(--a1);white-space:nowrap;opacity:0;transform:translateX(-4px);transition:.25s}
+  .card:hover .live{opacity:1;transform:none}
+
+  /* services */
+  .svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:56px}
+  .svc .item{border-top:1px solid var(--line);padding-top:24px}
+  .svc .num{font-family:'Space Grotesk';font-size:13px;color:var(--a1);margin-bottom:14px}
+  .svc h3{font-size:21px;margin-bottom:10px}
+  .svc p{color:var(--muted);font-size:15px}
+
+  /* contact */
+  .contact{text-align:center}
+  .contact .lead{margin:0 auto 18px}
+  .contact .sub{margin:0 auto}
+  .contactbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+
+  footer{border-top:1px solid var(--line);padding:30px clamp(20px,5vw,40px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;max-width:var(--max);margin:0 auto}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ===== 21st.dev-inspired motion ===== */
+  /* shimmering gradient text (like animated gradient headings) */
+  @keyframes shimmer{to{background-position:200% center}}
+  .hero h1 em{background:linear-gradient(100deg,var(--a1),var(--a2),var(--a1));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite}
+  /* staggered hero load-in */
+  @keyframes riseIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  .hero-inner>*{opacity:0;animation:riseIn .9s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero-inner .eyebrow{animation-delay:.1s}.hero-inner h1{animation-delay:.25s}.hero-inner p{animation-delay:.45s}.hero-inner .cta{animation-delay:.6s}
+  /* soft legibility halo so hero text reads over the 3D gem */
+  .hero-inner::before{content:"";position:absolute;inset:-14% -18%;z-index:-1;border-radius:50%;filter:blur(8px);
+    background:radial-gradient(closest-side,rgba(255,255,255,.82),rgba(255,255,255,.45) 58%,transparent 80%)}
+  .btn{will-change:transform}
+  /* Infinite Ribbon marquee */
+  .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marquee .track{display:inline-flex;gap:38px;white-space:nowrap;will-change:transform;animation:scrollx 26s linear infinite;font-family:'Space Grotesk';font-weight:600;font-size:clamp(20px,3vw,34px)}
+  .marquee:hover .track{animation-play-state:paused}
+  .marquee .track .w{color:var(--fg)}.marquee .track .d{color:var(--a1)}
+  @keyframes scrollx{to{transform:translateX(-50%)}}
+  /* Display-Cards spotlight on hover */
+  .card{position:relative;isolation:isolate}
+  .card::before{content:"";position:absolute;inset:0;border-radius:18px;z-index:1;pointer-events:none;opacity:0;transition:opacity .3s;
+    background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(109,92,255,.16),transparent 60%)}
+  .card:hover::before{opacity:1}
+  .card .meta{position:relative;z-index:2}
+  /* aurora shader-style glow behind contact */
+  .contact{position:relative;overflow:hidden}
+  .aurora{position:absolute;inset:-25% -15%;z-index:0;filter:blur(72px);opacity:.55;pointer-events:none;
+    background:radial-gradient(38% 48% at 22% 32%,rgba(167,139,250,.55),transparent 60%),radial-gradient(40% 48% at 80% 38%,rgba(94,234,212,.5),transparent 60%),radial-gradient(46% 50% at 52% 82%,rgba(167,139,250,.4),transparent 60%);
+    animation:aurora 16s ease-in-out infinite alternate}
+  @keyframes aurora{to{transform:translate3d(0,-7%,0) scale(1.12) rotate(7deg)}}
+  .contact>.reveal{position:relative;z-index:1}
+  @media(prefers-reduced-motion:reduce){.marquee .track,.aurora,.hero h1 em{animation:none}.hero-inner>*{animation-duration:.01s}}
+</style>
+</head>
+<body>
+  <nav>
+    <div class="brand">Caleb<span> Steele</span></div>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <canvas id="scene"></canvas>
+    <div class="hero-inner">
+      <div class="eyebrow">Web Designer · Rockford, MI</div>
+      <h1>Websites worth<br><em>showing off.</em></h1>
+      <p>Modern, fast, mobile-ready websites for local businesses — designed to look stunning and bring in more customers.</p>
+      <div class="cta">
+        <a href="#contact" class="btn btn-primary">Get a free preview</a>
+        <a href="#work" class="btn btn-ghost">See the work</a>
+      </div>
+    </div>
+    <div class="scrollhint">Scroll</div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span class="w">Web Design</span><span class="d">✦</span><span class="w">SEO</span><span class="d">✦</span><span class="w">3D &amp; Motion</span><span class="d">✦</span><span class="w">Online Reviews</span><span class="d">✦</span><span class="w">Mobile-Ready</span><span class="d">✦</span><span class="w">Local Business</span><span class="d">✦</span>
+      <span class="w">Web Design</span><span class="d">✦</span><span class="w">SEO</span><span class="d">✦</span><span class="w">3D &amp; Motion</span><span class="d">✦</span><span class="w">Online Reviews</span><span class="d">✦</span><span class="w">Mobile-Ready</span><span class="d">✦</span><span class="w">Local Business</span><span class="d">✦</span>
+    </div>
+  </div>
+
+  <section class="block" id="work">
+    <div class="reveal">
+      <div class="label">Selected Work</div>
+      <h2 class="lead">A website built for every kind of business.</h2>
+      <p class="sub">Whatever you do, there's a site that fits it — clean, modern, and made to win customers.</p>
+    </div>
+    <div class="grid">
+      <a class="card reveal" href="examples/restaurant/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/restaurant.png')"></div><div class="meta"><div><h3>Restaurant &amp; Café</h3><span class="d">Menus, hours &amp; reservations</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/store/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/store.png')"></div><div class="meta"><div><h3>Online Store</h3><span class="d">Browse, cart &amp; checkout</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/service/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/service.png')"></div><div class="meta"><div><h3>Local Service</h3><span class="d">Quotes, booking &amp; contact</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/portfolio/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/portfolio.png')"></div><div class="meta"><div><h3>Portfolio</h3><span class="d">Show off your best work</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/product3d/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/product3d.png')"></div><div class="meta"><div><h3>3D Product Showcase</h3><span class="d">Scroll-driven product launch</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/brand/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/brand.png')"></div><div class="meta"><div><h3>Professional Brand</h3><span class="d">A strong first impression</span></div><span class="live">View live ↗</span></div></a>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="reveal">
+      <div class="label">What I Do</div>
+      <h2 class="lead">Everything your business needs to look great online.</h2>
+    </div>
+    <div class="svc">
+      <div class="item reveal"><div class="num">01</div><h3>Website Design</h3><p>Custom, modern sites built to load fast and look perfect on every phone, tablet, and screen.</p></div>
+      <div class="item reveal"><div class="num">02</div><h3>Get Found on Google</h3><p>Smart SEO setup so customers actually find you when they search your town and your service.</p></div>
+      <div class="item reveal"><div class="num">03</div><h3>Reviews &amp; Growth</h3><p>Make it effortless for happy customers to leave reviews and keep coming back.</p></div>
+      <div class="item reveal"><div class="num">04</div><h3>3D &amp; Motion</h3><p>Eye-catching interactive touches — like the one above — that set you apart from every competitor.</p></div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="aurora"></div>
+    <div class="reveal">
+      <div class="label">Let's Build Yours</div>
+      <h2 class="lead">I'll design you a free preview — before you pay a thing.</h2>
+      <p class="sub">See exactly what your new site could look like. You only pay if you want it live — fair, honest pricing, no surprises.</p>
+      <div class="contactbtns">
+        <a href="mailto:calebjohnsteele@gmail.com" class="btn btn-primary">calebjohnsteele@gmail.com</a>
+        <a href="tel:6162369210" class="btn btn-ghost">616-236-9210</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 Caleb Steele — Web Design · Rockford, MI</div>
+    <div>Designed &amp; built from scratch.</div>
+  </footer>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    const canvas = document.getElementById('scene');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+    camera.position.set(0, 0, 6.4);
+
+    // studio reflections (no external HDRI file needed)
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    // hero object: faceted gem with iridescent physical material
+    const geo = new THREE.IcosahedronGeometry(1.45, 0);
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: 0x9a8cff,
+      metalness: 0.5,
+      roughness: 0.07,
+      iridescence: 1.0,
+      iridescenceIOR: 1.4,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.08,
+      envMapIntensity: 1.15
+    });
+    const gem = new THREE.Mesh(geo, mat);
+    scene.add(gem);
+
+    // soft wireframe shell for extra detail
+    const shell = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(2.3, 1),
+      new THREE.MeshBasicMaterial({ color:0x6d5cff, wireframe:true, transparent:true, opacity:0.06 })
+    );
+    scene.add(shell);
+
+    // accent key lights
+    const key = new THREE.DirectionalLight(0x8a7bff, 2.0); key.position.set(5,4,6); scene.add(key);
+    const fill = new THREE.DirectionalLight(0x39d4e0, 1.3); fill.position.set(-6,-2,2); scene.add(fill);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+    // subtle floating particles (soft grey on white)
+    const pCount = 180, pPos = new Float32Array(pCount*3);
+    for(let i=0;i<pCount;i++){
+      pPos[i*3]   = (Math.random()-0.5)*16;
+      pPos[i*3+1] = (Math.random()-0.5)*10;
+      pPos[i*3+2] = (Math.random()-0.5)*8 - 2;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
+    const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color:0x9aa0ad, size:0.02, transparent:true, opacity:0.4 }));
+    scene.add(particles);
+
+    // mouse parallax
+    const mouse = {x:0,y:0}, target = {x:0,y:0};
+    window.addEventListener('pointermove', e=>{
+      mouse.x = (e.clientX/window.innerWidth - 0.5);
+      mouse.y = (e.clientY/window.innerHeight - 0.5);
+    });
+
+    function resize(){
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if(canvas.width!==w || canvas.height!==h){
+        renderer.setSize(w,h,false);
+        camera.aspect = w/h; camera.updateProjectionMatrix();
+      }
+    }
+    window.addEventListener('resize', resize);
+
+    const clock = new THREE.Clock();
+    function tick(){
+      const t = clock.getElapsedTime();
+      gem.rotation.y = t*0.25;
+      gem.rotation.x = Math.sin(t*0.4)*0.18;
+      gem.position.y = Math.sin(t*0.8)*0.08;
+      shell.rotation.y = -t*0.12;
+      shell.rotation.z = t*0.05;
+      particles.rotation.y = t*0.02;
+
+      target.x += (mouse.x - target.x)*0.04;
+      target.y += (mouse.y - target.y)*0.04;
+      camera.position.x = target.x*1.1;
+      camera.position.y = -target.y*0.8;
+      camera.lookAt(0,0,0);
+
+      resize();
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    }
+    resize(); tick();
+
+    // scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    }, { threshold:0.15 });
+    document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%6*60)+'ms'; io.observe(el); });
+  </script>
+
+  <script>
+    // Magnetic buttons (21st.dev "HOVER ME" style)
+    document.querySelectorAll('.btn').forEach(btn=>{
+      btn.addEventListener('pointermove',e=>{
+        const r=btn.getBoundingClientRect();
+        btn.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.3)+'px,'+((e.clientY-r.top-r.height/2)*0.45)+'px)';
+      });
+      btn.addEventListener('pointerleave',()=>{ btn.style.transform=''; });
+    });
+    // Spotlight that follows the cursor across each work card (Display Cards style)
+    document.querySelectorAll('.card').forEach(c=>{
+      c.addEventListener('pointermove',e=>{
+        const r=c.getBoundingClientRect();
+        c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+        c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+      });
+    });
+  </script>
+</body>
+</html>

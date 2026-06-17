@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evergreen — Landscaping &amp; Lawn Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fff;--ink:#13241a;--green:#2f7d4f;--green-d:#1f5c39;--soft:#eef5ef;--muted:#5f6f64;--line:#e7eee9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);line-height:1.55}
+  a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+  .reveal{opacity:0;transform:translateY(22px);transition:.8s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,5vw,56px)}
+  .logo{font-weight:800;font-size:21px;display:flex;align-items:center;gap:9px}
+  .logo b{width:13px;height:13px;border-radius:50% 50% 50% 0;background:var(--green);display:inline-block;transform:rotate(45deg)}
+  .nlinks{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+  .call{background:var(--green);color:#fff;font-weight:700;padding:11px 20px;border-radius:10px;font-size:14px}
+  @media(max-width:720px){.nlinks{display:none}}
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(24px,4vw,50px);align-items:center;max-width:1200px;margin:0 auto;padding:clamp(30px,6vw,80px) clamp(20px,5vw,56px)}
+  @media(max-width:820px){.hero{grid-template-columns:1fr}}
+  .tag{display:inline-block;background:var(--soft);color:var(--green-d);font-weight:700;font-size:13px;padding:7px 15px;border-radius:100px;margin-bottom:22px}
+  .hero h1{font-size:clamp(38px,6vw,68px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  .hero h1 span{color:var(--green)}
+  .hero p{color:var(--muted);font-size:18px;margin:20px 0 30px;max-width:480px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .b1{background:var(--green);color:#fff;font-weight:700;padding:15px 30px;border-radius:12px}
+  .b2{background:#fff;border:1px solid #cfe0d4;font-weight:700;padding:15px 30px;border-radius:12px}
+  .stats{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px}
+  .stat b{font-size:28px;font-weight:800;color:var(--green-d)}.stat span{display:block;color:var(--muted);font-size:14px;font-weight:500}
+  .hero-img{aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:#dfe}.hero-img img{width:100%;height:100%;object-fit:cover}
+  section{max-width:1100px;margin:0 auto;padding:clamp(56px,8vw,100px) clamp(20px,5vw,56px)}
+  .sh{text-align:center;margin-bottom:46px}.sh h2{font-size:clamp(28px,4.5vw,44px);font-weight:800;letter-spacing:-.02em}.sh p{color:var(--muted);margin-top:10px}
+  .svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;transition:.3s}
+  .card:hover{border-color:var(--green);box-shadow:0 20px 40px -24px rgba(47,125,79,.4)}
+  .card .ic{width:46px;height:46px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:7px}.card p{color:var(--muted);font-size:14px}
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:760px){.gal{grid-template-columns:repeat(2,1fr)}}
+  .gal .t{aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:#dfe}.gal .t img{width:100%;height:100%;object-fit:cover;transition:.4s}.gal .t:hover img{transform:scale(1.06)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  .step{counter-increment:s}
+  .step::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;margin-bottom:14px}
+  .step h3{font-size:19px;font-weight:700;margin-bottom:6px}.step p{color:var(--muted);font-size:14px}
+  .revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .rev{background:var(--soft);border-radius:18px;padding:26px}.rev .st{color:#f5a623;letter-spacing:2px;margin-bottom:10px}.rev p{font-size:15px}.rev .who{color:var(--muted);font-size:13px;font-weight:700;margin-top:12px}
+  .banner{position:relative;border-radius:24px;overflow:hidden;text-align:center;padding:clamp(46px,7vw,80px);color:#fff;
+    background:linear-gradient(rgba(20,60,40,.78),rgba(20,60,40,.86)),url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1500&q=80') center/cover}
+  .banner h2{font-size:clamp(26px,4vw,40px);font-weight:800}.banner p{opacity:.9;margin:12px 0 26px}
+  .banner a{background:#fff;color:var(--green-d);font-weight:700;padding:15px 32px;border-radius:12px;display:inline-block}
+  footer{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+</style></head>
+<body>
+  <nav><div class="logo"><b></b>Evergreen</div><div class="nlinks"><a>Services</a><a>Gallery</a><a>Reviews</a><a>Contact</a></div><a class="call">(616) 555-0193</a></nav>
+  <header class="hero">
+    <div class="reveal">
+      <span class="tag">★ 4.9 · 300+ local jobs</span>
+      <h1>A yard you'll be <span>proud of.</span></h1>
+      <p>Full-service lawn care, landscaping, and seasonal cleanup for homes across the Rockford area. Free, no-pressure quotes.</p>
+      <div class="cta"><a class="b1">Get a free quote</a><a class="b2">See our work</a></div>
+      <div class="stats"><div class="stat"><b>12+</b><span>Years in business</span></div><div class="stat"><b>300+</b><span>Yards transformed</span></div><div class="stat"><b>4.9★</b><span>Google rating</span></div></div>
+    </div>
+    <div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1571055107559-3e67626fa8be?auto=format&fit=crop&w=900&q=80" alt=""></div>
+  </header>
+
+  <section>
+    <div class="sh reveal"><h2>What we do</h2><p>One crew for everything your property needs.</p></div>
+    <div class="svc reveal">
+      <div class="card"><div class="ic">🌿</div><h3>Lawn Care</h3><p>Mowing, edging, fertilization, and weed control on a schedule that works for you.</p></div>
+      <div class="card"><div class="ic">🌳</div><h3>Landscaping</h3><p>Design and installation of beds, trees, mulch, and hardscapes that boost curb appeal.</p></div>
+      <div class="card"><div class="ic">🍂</div><h3>Seasonal Cleanup</h3><p>Spring and fall cleanups, leaf removal, and snow services to keep things tidy year-round.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh reveal"><h2>Recent work</h2><p>A few yards we've transformed around town.</p></div>
+    <div class="gal reveal">
+      <div class="t"><img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80"></div>
+      <div class="t"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"></div>
+      <div class="t"><img src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=600&q=80"></div>
+      <div class="t"><img src="https://images.unsplash.com/photo-1571055107559-3e67626fa8be?auto=format&fit=crop&w=600&q=80"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh reveal"><h2>How it works</h2><p>Simple, from first call to finished yard.</p></div>
+    <div class="steps reveal">
+      <div class="step"><h3>Request a quote</h3><p>Call or fill out the form — tell us what your yard needs.</p></div>
+      <div class="step"><h3>We visit &amp; plan</h3><p>We stop by, talk options, and send a clear, honest estimate.</p></div>
+      <div class="step"><h3>We get to work</h3><p>Our crew shows up on time and leaves your yard looking great.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh reveal"><h2>What neighbors say</h2></div>
+    <div class="revs reveal">
+      <div class="rev"><div class="st">★★★★★</div><p>"Reliable, friendly, and my lawn has never looked better. Highly recommend."</p><div class="who">— Dave M., Rockford</div></div>
+      <div class="rev"><div class="st">★★★★★</div><p>"They redid our whole front yard and it's stunning. Fair price too."</p><div class="who">— Karen L., Belmont</div></div>
+      <div class="rev"><div class="st">★★★★★</div><p>"Show up when they say they will. Hard to find that these days."</p><div class="who">— Tom R., Cannonsburg</div></div>
+    </div>
+  </section>
+
+  <section><div class="banner reveal"><h2>Ready for your free quote?</h2><p>Tell us about your yard — we'll get back to you within a day.</p><a>Request a quote</a></div></section>
+  <footer>© 2026 Evergreen Landscaping · Rockford, MI · Licensed &amp; insured</footer>
+
+  <script>
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+    document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+  </script>
+</body></html>
