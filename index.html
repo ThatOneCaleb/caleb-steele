@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Caleb Steele — Web Design</title>
-<meta name="description" content="Modern, fast, beautiful websites for local businesses. Designed and built by Caleb Steele." />
+<title>Caleb Steele, Web Design</title>
+<meta name="description" content="Modern, fast websites for local businesses. Designed and built by Caleb Steele in Rockford, MI." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -85,7 +85,8 @@
     box-shadow:0 1px 2px rgba(0,0,0,.04)
   }
   .card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(0,0,0,.25);border-color:rgba(0,0,0,.16)}
-  .card .thumb{aspect-ratio:16/10;background-size:cover;background-position:top center;border-bottom:1px solid var(--line)}
+  .card .thumb{position:relative;aspect-ratio:16/10;background-size:cover;background-position:top center;border-bottom:1px solid var(--line)}
+  .card .thumb::after{content:"EXAMPLE";position:absolute;top:10px;left:10px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;font-family:'Space Grotesk',sans-serif;color:var(--fg);background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:100px;padding:4px 10px;border:1px solid var(--line)}
   .card .meta{padding:16px 20px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
   .card .meta h3{font-size:17px;margin-bottom:3px}
   .card .meta span.d{font-size:13px;color:var(--muted)}
@@ -161,7 +162,7 @@
     <div class="hero-inner">
       <div class="eyebrow">Web Designer · Rockford, MI</div>
       <h1>Websites worth<br><em>showing off.</em></h1>
-      <p>Modern, fast, mobile-ready websites for local businesses — designed to look stunning and bring in more customers.</p>
+      <p>I build fast, mobile-ready websites for local businesses that look good and help you get more customers.</p>
       <div class="cta">
         <a href="#contact" class="btn btn-primary">Get a free preview</a>
         <a href="#work" class="btn btn-ghost">See the work</a>
@@ -179,17 +180,17 @@
 
   <section class="block" id="work">
     <div class="reveal">
-      <div class="label">Selected Work</div>
-      <h2 class="lead">A website built for every kind of business.</h2>
-      <p class="sub">Whatever you do, there's a site that fits it — clean, modern, and made to win customers.</p>
+      <div class="label">Example Sites</div>
+      <h2 class="lead">Six types of sites I can build for you.</h2>
+      <p class="sub">These are example sites I built from scratch to show what's possible. Each one is fully clickable.</p>
     </div>
     <div class="grid">
-      <a class="card reveal" href="examples/restaurant/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/restaurant.png')"></div><div class="meta"><div><h3>Restaurant &amp; Café</h3><span class="d">Menus, hours &amp; reservations</span></div><span class="live">View live ↗</span></div></a>
-      <a class="card reveal" href="examples/store/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/store.png')"></div><div class="meta"><div><h3>Online Store</h3><span class="d">Browse, cart &amp; checkout</span></div><span class="live">View live ↗</span></div></a>
-      <a class="card reveal" href="examples/service/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/service.png')"></div><div class="meta"><div><h3>Local Service</h3><span class="d">Quotes, booking &amp; contact</span></div><span class="live">View live ↗</span></div></a>
-      <a class="card reveal" href="examples/portfolio/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/portfolio.png')"></div><div class="meta"><div><h3>Portfolio</h3><span class="d">Show off your best work</span></div><span class="live">View live ↗</span></div></a>
-      <a class="card reveal" href="examples/product3d/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/product3d.png')"></div><div class="meta"><div><h3>3D Product Showcase</h3><span class="d">Scroll-driven product launch</span></div><span class="live">View live ↗</span></div></a>
-      <a class="card reveal" href="examples/brand/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/brand.png')"></div><div class="meta"><div><h3>Professional Brand</h3><span class="d">A strong first impression</span></div><span class="live">View live ↗</span></div></a>
+      <a class="card reveal" href="examples/restaurant/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/restaurant.png')"></div><div class="meta"><div><h3>Restaurant &amp; Café</h3><span class="d">Menus, hours &amp; reservations</span></div><span class="live">View example ↗</span></div></a>
+      <a class="card reveal" href="examples/store/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/store.png')"></div><div class="meta"><div><h3>Online Store</h3><span class="d">Browse, cart &amp; checkout</span></div><span class="live">View example ↗</span></div></a>
+      <a class="card reveal" href="examples/service/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/service.png')"></div><div class="meta"><div><h3>Local Service</h3><span class="d">Quotes, booking &amp; contact</span></div><span class="live">View example ↗</span></div></a>
+      <a class="card reveal" href="examples/portfolio/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/portfolio.png')"></div><div class="meta"><div><h3>Portfolio</h3><span class="d">Show off your best work</span></div><span class="live">View example ↗</span></div></a>
+      <a class="card reveal" href="examples/product3d/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/product3d.png')"></div><div class="meta"><div><h3>3D Product Showcase</h3><span class="d">Scroll-driven product launch</span></div><span class="live">View example ↗</span></div></a>
+      <a class="card reveal" href="examples/brand/" target="_blank" rel="noopener"><div class="thumb" style="background-image:url('thumbs/brand.png')"></div><div class="meta"><div><h3>Professional Brand</h3><span class="d">A strong first impression</span></div><span class="live">View example ↗</span></div></a>
     </div>
   </section>
 
@@ -202,7 +203,7 @@
       <div class="item reveal"><div class="num">01</div><h3>Website Design</h3><p>Custom, modern sites built to load fast and look perfect on every phone, tablet, and screen.</p></div>
       <div class="item reveal"><div class="num">02</div><h3>Get Found on Google</h3><p>Smart SEO setup so customers actually find you when they search your town and your service.</p></div>
       <div class="item reveal"><div class="num">03</div><h3>Reviews &amp; Growth</h3><p>Make it effortless for happy customers to leave reviews and keep coming back.</p></div>
-      <div class="item reveal"><div class="num">04</div><h3>3D &amp; Motion</h3><p>Eye-catching interactive touches — like the one above — that set you apart from every competitor.</p></div>
+      <div class="item reveal"><div class="num">04</div><h3>3D &amp; Motion</h3><p>Eye-catching interactive touches like the one above that set you apart from every competitor.</p></div>
     </div>
   </section>
 
@@ -210,8 +211,8 @@
     <div class="aurora"></div>
     <div class="reveal">
       <div class="label">Let's Build Yours</div>
-      <h2 class="lead">I'll design you a free preview — before you pay a thing.</h2>
-      <p class="sub">See exactly what your new site could look like. You only pay if you want it live — fair, honest pricing, no surprises.</p>
+      <h2 class="lead">I'll put together a free preview of your site before you pay anything.</h2>
+      <p class="sub">You get to see exactly what your site will look like first. If you want it live, great. Straightforward pricing, no surprises.</p>
       <div class="contactbtns">
         <a href="mailto:calebjohnsteele@gmail.com" class="btn btn-primary">calebjohnsteele@gmail.com</a>
         <a href="tel:6162369210" class="btn btn-ghost">616-236-9210</a>
@@ -220,7 +221,7 @@
   </section>
 
   <footer>
-    <div>© 2026 Caleb Steele — Web Design · Rockford, MI</div>
+    <div>© 2026 Caleb Steele, Web Design · Rockford, MI</div>
     <div>Designed &amp; built from scratch.</div>
   </footer>
 
