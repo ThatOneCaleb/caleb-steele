@@ -1,166 +1,950 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aero One — 3D Sneaker Drop</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{--fg:#0d0d10;--muted:#6b6b76;--a:#4b3bff}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;background:#ececed;color:var(--fg);line-height:1.5;overflow-x:hidden}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1}
-  a{color:inherit;text-decoration:none}
-  #bg{position:fixed;inset:0;z-index:0;background:
-    radial-gradient(60% 50% at 50% 35%,#ffffff,transparent 70%),
-    radial-gradient(40% 40% at 80% 80%,rgba(75,59,255,.10),transparent 70%),#e7e7ea}
-  #scene{position:fixed;inset:0;z-index:1;width:100%;height:100%;display:block}
-  nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(20px,5vw,56px)}
-  .brand{font-family:'Space Grotesk';font-weight:700;font-size:20px}.brand b{color:var(--a)}
-  .navlinks{display:flex;gap:28px;font-size:14px;color:var(--muted)}
-  @media(max-width:640px){.navlinks{display:none}}
-  /* loader */
-  #loader{position:fixed;inset:0;z-index:30;background:#ececed;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s}
-  #loader .ring{width:46px;height:46px;border-radius:50%;border:3px solid #d3d3d9;border-top-color:var(--a);animation:spin 1s linear infinite}
-  #loader .pct{font-family:'Space Grotesk';font-weight:600;color:var(--muted);font-size:14px}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .scenes{position:relative;z-index:5;pointer-events:none}
-  .scene{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,7vw,90px)}
-  .scene.right{align-items:flex-end;text-align:right}.scene.center{align-items:center;text-align:center}
-  .scene .inner{max-width:540px;will-change:opacity,transform}
-  .eye{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--a);margin-bottom:18px;font-weight:600}
-  .scene h1{font-size:clamp(58px,13vw,150px);letter-spacing:-.04em}
-  .scene h2{font-size:clamp(34px,6vw,68px);margin-bottom:16px}
-  .scene p{color:var(--muted);font-size:clamp(16px,2vw,20px);margin-top:16px}
-  .price{font-family:'Space Grotesk';font-size:clamp(30px,4vw,46px);margin:6px 0 26px}
-  .btns{display:flex;gap:14px;flex-wrap:wrap;pointer-events:auto}
-  .scene.center .btns{justify-content:center}.scene.right .btns{justify-content:flex-end}
-  .btn{font-family:'Space Grotesk';font-weight:600;font-size:15px;padding:14px 32px;border-radius:100px;transition:transform .2s}
-  .b1{background:var(--a);color:#fff;box-shadow:0 12px 30px -10px var(--a)}.b1:hover{transform:translateY(-2px)}
-  .b2{border:1px solid rgba(0,0,0,.18);color:var(--fg)}
-  .specs{display:flex;gap:30px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:14px}
-  .specs b{display:block;font-family:'Space Grotesk';font-size:24px;color:var(--fg)}
-  .hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);animation:bob 2.2s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
-  footer{position:relative;z-index:5;text-align:center;padding:50px 24px;color:var(--muted);font-size:14px}
-</style></head>
-<body>
-  <div id="bg"></div>
-  <canvas id="scene"></canvas>
-  <div id="loader"><div class="ring"></div><div class="pct">Loading 3D · 0%</div></div>
-  <nav><div class="brand">aero<b>.</b></div><div class="navlinks"><a>Shop</a><a>Tech</a><a>Drop</a></div></nav>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Systems — Industrial Finishing &amp; Filtration Equipment</title>
+  <meta name="description" content="Complete turn-key systems for powder coating, liquid finishing, and air filtration.">
 
-  <div class="scenes">
-    <section class="scene"><div class="inner">
-      <div class="eye">New Drop · 2026</div>
-      <h1>Aero One</h1>
-      <p>The lightest ride we've ever built. Scroll to take a closer look.</p>
-    </div></section>
-    <section class="scene right"><div class="inner">
-      <h2>Engineered to fly.</h2>
-      <p>A featherweight knit upper on a responsive carbon plate — propulsion with every step.</p>
-    </div></section>
-    <section class="scene"><div class="inner">
-      <h2>Every angle, considered.</h2>
-      <p>Sculpted from heel to toe and finished by hand. Spin it. Study it.</p>
-      <div class="specs"><div><b>6.4oz</b>weight</div><div><b>100%</b>recycled knit</div><div><b>Carbon</b>plate</div></div>
-    </div></section>
-    <section class="scene center"><div class="inner">
-      <div class="eye">Limited release</div>
-      <h2>Aero One.</h2>
-      <div class="price">$160</div>
-      <div class="btns"><a class="btn b1">Notify me</a><a class="btn b2">Size guide</a></div>
-    </div></section>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#FFFFFF',
+            steel: '#F3F4F6',
+            iron: '#E5E7EB',
+            gunmetal: '#D1D5DB',
+            forge: '#2D8F4E',
+            'forge-bright': '#38B261',
+            ember: '#C94A1A',
+            'ember-bright': '#E05A2A',
+            chrome: '#111827',
+            alloy: '#4B5563',
+            rivet: '#6B7280',
+            'blue-steel': '#1A6FC4',
+          },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #1A1A2E; overflow-x: hidden; }
+
+    /* Grain texture overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Diagonal line texture */
+    .texture-lines {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(42, 53, 68, 0.15) 3px,
+        rgba(42, 53, 68, 0.15) 4px
+      );
+    }
+
+    /* Nav styles */
+    .nav-blur {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.5);
+    }
+
+    /* Hero gradient mesh */
+    .hero-gradient {
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(45, 143, 78, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 20%, rgba(26, 111, 196, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(243, 244, 246, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    }
+
+    /* Card hover effects */
+    .product-card {
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+    .product-card .card-image {
+      transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .product-card:hover .card-image {
+      transform: scale(1.05);
+    }
+    .product-card .card-arrow {
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    .product-card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .product-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: border-color 0.4s ease;
+    }
+    .product-card:hover::after {
+      border-color: rgba(45, 143, 78, 0.3);
+    }
+
+    /* CTA button glow */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #2D8F4E, #1A6FC4, #2D8F4E);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(45, 143, 78, 0.25);
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:focus-visible {
+      outline: 2px solid #2D8F4E;
+      outline-offset: 3px;
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-outline {
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .btn-outline:hover {
+      background: rgba(45, 143, 78, 0.1);
+      border-color: #2D8F4E;
+      color: #38B261;
+      transform: translateY(-2px);
+    }
+    .btn-outline:focus-visible {
+      outline: 2px solid #2D8F4E;
+      outline-offset: 3px;
+    }
+    .btn-outline:active {
+      transform: translateY(0);
+    }
+
+    /* Partner logos */
+    .partner-logo {
+      filter: grayscale(1) brightness(1);
+      transition: filter 0.4s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .partner-logo:hover {
+      filter: grayscale(0) brightness(1);
+      transform: scale(1.05);
+    }
+
+    /* Pixel logo grid */
+    .pixel-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      border-radius: 12px;
+      border: 1px solid rgba(209,213,219,0.3);
+      background: #FAFAFA;
+      overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .pixel-card:hover {
+      border-color: var(--brand-color, rgba(45,143,78,0.4));
+      box-shadow: 0 4px 24px color-mix(in srgb, var(--brand-color, #111827) 15%, transparent);
+    }
+    .pixel-card canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .pixel-card .logo-text {
+      position: relative;
+      z-index: 2;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #111827;
+      transition: color 0.3s ease;
+    }
+    .pixel-card:hover .logo-text {
+      color: var(--brand-color, #111827);
+    }
+    .pixel-card .logo-img {
+      position: relative;
+      z-index: 2;
+      max-height: 55px;
+      max-width: 80%;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+    .pixel-card:hover .logo-img {
+      transform: scale(1.05);
+    }
+
+    /* Stat counter glow */
+    .stat-value {
+      background: linear-gradient(180deg, #111827 0%, #6B7280 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Scroll reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger children */
+    .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+    .stagger > .reveal:nth-child(2) { transition-delay: 0.1s; }
+    .stagger > .reveal:nth-child(3) { transition-delay: 0.2s; }
+    .stagger > .reveal:nth-child(4) { transition-delay: 0.25s; }
+
+    /* Mobile nav */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    /* Nav link hover */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #2D8F4E;
+      transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Contact form inputs */
+    .form-input {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #2D8F4E;
+      box-shadow: 0 0 0 3px rgba(45, 143, 78, 0.15);
+    }
+
+    /* Animated border for hero section */
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Scroll indicator */
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(8px); opacity: 1; }
+    }
+    .scroll-indicator {
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    /* Shader background canvas */
+    #shader-bg canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Hero text readability over shader */
+    .hero-text-shadow {
+      text-shadow: 0 2px 20px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.4);
+    }
+    .hero-body-shadow {
+      text-shadow: 0 1px 12px rgba(255,255,255,0.7), 0 0 40px rgba(255,255,255,0.4);
+    }
+
+    /* Hero heading stagger */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-animate {
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    .hero-animate-1 { animation-delay: 0.1s; }
+    .hero-animate-2 { animation-delay: 0.25s; }
+    .hero-animate-3 { animation-delay: 0.4s; }
+    .hero-animate-4 { animation-delay: 0.55s; }
+    .hero-animate-5 { animation-delay: 0.7s; }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <header class="fixed top-0 left-0 right-0 z-50 nav-blur">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="index.html" class="flex-shrink-0">
+        <span class="font-display font-800 uppercase tracking-widest text-chrome" style="font-size:1.35rem;letter-spacing:.18em;">APEX SYSTEMS</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-10">
+        <a href="index.html" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-chrome">Home</a>
+        <a href="powder-coating.html" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-alloy hover:text-chrome">Powder Coating</a>
+        <a href="air-filters.html" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-alloy hover:text-chrome">Air Filters</a>
+        <a href="liquid-finishing.html" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-alloy hover:text-chrome">Liquid Finishing</a>
+        <a href="shop.html" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-alloy hover:text-chrome">Shop</a>
+        <a href="#contact" class="nav-link font-display text-sm font-600 tracking-widest uppercase text-alloy hover:text-chrome">Contact</a>
+      </div>
+
+      <!-- CTA Button -->
+      <a href="#contact" class="hidden lg:inline-flex btn-primary items-center gap-2 bg-forge text-white font-display font-700 text-sm tracking-wider uppercase px-6 py-3 rounded-lg">
+        Get a Quote
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMenu()" class="lg:hidden flex flex-col gap-1.5 p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-forge rounded" aria-label="Toggle menu">
+        <span id="bar1" class="block w-6 h-0.5 bg-chrome transition-transform duration-300"></span>
+        <span id="bar2" class="block w-6 h-0.5 bg-chrome transition-opacity duration-300"></span>
+        <span id="bar3" class="block w-6 h-0.5 bg-chrome transition-transform duration-300"></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-midnight/98 flex flex-col items-center justify-center gap-8">
+    <a href="index.html" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-chrome">Home</a>
+    <a href="powder-coating.html" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-alloy hover:text-chrome">Powder Coating</a>
+    <a href="air-filters.html" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-alloy hover:text-chrome">Air Filters</a>
+    <a href="liquid-finishing.html" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-alloy hover:text-chrome">Liquid Finishing</a>
+    <a href="shop.html" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-alloy hover:text-chrome">Shop</a>
+    <a href="#contact" onclick="toggleMenu()" class="font-display text-2xl font-700 tracking-widest uppercase text-alloy hover:text-chrome">Contact</a>
+    <a href="#contact" onclick="toggleMenu()" class="btn-primary mt-4 bg-forge text-white font-display font-700 text-sm tracking-wider uppercase px-8 py-4 rounded-lg">Get a Quote</a>
   </div>
 
-  <div class="hint">Scroll</div>
-  <footer>© 2026 Aero · A 3D product experience</footer>
+  <!-- ========== HERO SECTION ========== -->
+  <section class="relative min-h-screen flex items-center overflow-hidden">
+    <!-- Shader background -->
+    <div id="shader-bg" class="absolute inset-0 z-0" style="background:#FFF;"></div>
+    <!-- Dark overlay for readability -->
+    <div class="absolute inset-0 z-[1]" style="background: radial-gradient(ellipse 80% 70% at 30% 60%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.8) 100%);"></div>
+    <!-- Accent line -->
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forge/40 to-transparent z-[2]"></div>
 
-  <script type="importmap">
-  { "imports": {
-      "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }}
-  </script>
-  <script type="module">
-    import * as THREE from 'three';
-    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    <div class="relative z-[3] max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20 lg:pt-40 lg:pb-32 w-full">
+      <div class="max-w-4xl">
+        <!-- Label -->
+        <span class="hero-animate hero-animate-1 inline-block font-display text-xs font-500 tracking-[0.25em] uppercase text-forge mb-6">
+          Industrial Finishing &mdash; Since 1990
+        </span>
 
-    const canvas=document.getElementById('scene');
-    const loaderEl=document.getElementById('loader');
-    const pctEl=loaderEl.querySelector('.pct');
-    const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-    renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-    renderer.toneMapping=THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure=1.05;
+        <!-- Headline -->
+        <h1 class="hero-animate hero-animate-2 hero-text-shadow font-display font-800 uppercase leading-[0.92] tracking-[-0.03em] text-chrome mb-8" style="font-size: clamp(3rem, 8vw, 7rem);">
+          Industrial Finishing<br>
+          <span class="text-forge">&</span> Filtration<br>
+          Solutions
+        </h1>
 
-    const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(35,1,0.1,100);
-    camera.position.set(0,0,6);
+        <!-- Subheadline -->
+        <p class="hero-animate hero-animate-3 hero-body-shadow font-body text-lg lg:text-xl text-alloy leading-relaxed max-w-xl mb-10" style="line-height: 1.7;">
+          Complete turn-key systems for powder coating, liquid finishing, and air filtration. Any and all finishing equipment needs &mdash; all under one roof.
+        </p>
 
-    const pmrem=new THREE.PMREMGenerator(renderer);
-    scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+        <!-- CTAs -->
+        <div class="hero-animate hero-animate-4 flex flex-wrap gap-4">
+          <a href="shop.html" class="btn-primary inline-flex items-center gap-2 bg-forge text-white font-display font-700 text-sm tracking-wider uppercase px-8 py-4 rounded-lg">
+            Shop Now
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </a>
+          <a href="#products" class="btn-outline inline-flex items-center gap-2 border border-gunmetal text-alloy font-display font-700 text-sm tracking-wider uppercase px-8 py-4 rounded-lg">
+            Explore Products
+          </a>
+        </div>
+      </div>
 
-    const key=new THREE.DirectionalLight(0xffffff,2.4); key.position.set(5,6,6); scene.add(key);
-    const fill=new THREE.DirectionalLight(0x9d8bff,1.3); fill.position.set(-6,-1,-3); scene.add(fill);
-    scene.add(new THREE.AmbientLight(0xffffff,0.45));
+      <!-- Scroll Indicator -->
+      <div class="hero-animate hero-animate-5 absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-[3]">
+        <span class="font-display text-[10px] tracking-[0.3em] uppercase text-alloy/60">Scroll</span>
+        <svg class="scroll-indicator" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(122,136,153,0.5)"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+    </div>
 
-    // soft contact shadow
-    const shadowTex=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');const r=g.createRadialGradient(128,128,10,128,128,128);r.addColorStop(0,'rgba(0,0,0,.35)');r.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=r;g.fillRect(0,0,256,256);return new THREE.CanvasTexture(c);})();
-    const shadow=new THREE.Mesh(new THREE.PlaneGeometry(4,4),new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}));
-    shadow.rotation.x=-Math.PI/2; shadow.position.y=-1.3; scene.add(shadow);
+    <!-- Michigan Map with Grand Rapids marker -->
+    <div class="hidden lg:flex absolute right-24 xl:right-36 top-[45%] -translate-y-1/2 z-[3] flex-col items-center gap-4 hero-animate hero-animate-4">
+      <div class="relative" style="width: 340px;">
+        <svg viewBox="0 0 313 318" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" style="filter: drop-shadow(0 0 24px rgba(26,111,196,0.12));">
+          <!-- Lower Peninsula -->
+          <path d="M261.1,301.2 L213.3,303.1 L213.3,299.8 L171.5,299.8 L142.0,299.8 L149.2,293.2 L154.0,282.0 L158.5,275.2 L161.8,265.6 L163.7,251.9 L162.9,237.1 L152.5,208.1 L155.8,197.1 L153.5,184.0 L161.6,170.5 L163.3,159.3 L162.2,153.3 L168.0,150.8 L168.7,142.6 L177.9,140.4 L184.8,131.4 L184.2,149.5 L187.9,150.3 L192.6,141.2 L192.8,125.9 L195.7,122.1 L205.3,119.6 L202.2,108.9 L208.6,99.9 L216.6,99.3 L225.5,105.1 L234.2,105.9 L238.5,113.0 L245.0,113.6 L256.1,120.2 L260.0,119.9 L266.0,130.6 L261.1,136.3 L265.8,143.7 L267.5,152.2 L265.4,170.8 L258.2,175.5 L256.5,185.1 L247.9,188.3 L243.3,199.8 L245.0,204.2 L253.6,208.3 L260.1,202.0 L267.9,189.2 L280.1,184.2 L286.1,188.1 L289.8,195.2 L293.5,216.0 L294.0,226.4 L297.9,239.0 L294.2,257.1 L288.4,259.8 L288.2,253.2 L284.4,255.2 L279.9,270.2 L272.7,276.0 L270.6,287.5 L261.7,297.1 Z"
+                stroke="rgba(26,111,196,0.55)" stroke-width="1.5" fill="rgba(26,111,196,0.06)" stroke-linejoin="round"/>
+          <!-- Small island -->
+          <path d="M188.5,101.3 L189.1,107.3 L184.4,108.4 L186.4,99.9 Z"
+                stroke="rgba(26,111,196,0.4)" stroke-width="1" fill="rgba(26,111,196,0.06)" stroke-linejoin="round"/>
+          <!-- Upper Peninsula -->
+          <path d="M114.9,133.0 L109.5,127.8 L112.8,120.7 L104.5,119.6 L107.8,112.8 L108.1,104.0 L100.8,98.0 L96.7,91.7 L81.6,86.7 L77.0,88.4 L61.9,81.0 L25.5,70.9 L21.6,62.4 L15.0,59.4 L28.7,54.2 L34.9,48.1 L50.4,45.7 L60.5,38.3 L65.2,38.0 L69.0,32.8 L80.1,25.4 L85.7,19.1 L94.0,15.0 L101.9,18.6 L88.0,33.9 L84.7,39.1 L84.9,48.4 L91.7,41.3 L103.9,42.4 L113.4,47.3 L121.9,61.0 L126.5,63.5 L135.4,61.3 L137.6,64.3 L146.5,65.9 L165.5,54.4 L175.3,53.3 L188.5,53.9 L197.4,50.1 L204.2,49.8 L205.5,63.7 L212.5,65.7 L219.5,63.5 L222.4,66.8 L227.0,62.6 L237.3,61.3 L237.5,78.8 L242.1,86.2 L249.1,88.1 L249.9,83.2 L256.7,83.2 L260.3,88.4 L257.2,92.2 L237.9,88.9 L228.6,91.1 L218.5,85.1 L215.6,90.6 L217.0,95.2 L212.5,94.1 L205.9,87.3 L194.5,83.2 L188.7,82.9 L183.1,89.5 L173.8,91.1 L163.7,89.8 L159.6,92.5 L158.7,98.0 L147.6,102.6 L148.2,96.1 L143.4,94.7 L141.4,101.5 L133.3,101.8 L129.6,104.8 L124.2,116.6 L114.1,131.7 Z"
+                stroke="rgba(26,111,196,0.55)" stroke-width="1.5" fill="rgba(26,111,196,0.06)" stroke-linejoin="round"/>
 
-    const product=new THREE.Group(); scene.add(product);
-    let loaded=false;
-    new GLTFLoader().load(
-      'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb',
-      (gltf)=>{
-        const model=gltf.scene;
-        const box=new THREE.Box3().setFromObject(model);
-        const size=box.getSize(new THREE.Vector3());
-        const center=box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-        const scl=2.7/Math.max(size.x,size.y,size.z);
-        model.scale.setScalar(scl);
-        model.rotation.y=Math.PI*0.15;
-        product.add(model);
-        loaded=true;
-        loaderEl.style.opacity=0; setTimeout(()=>loaderEl.style.display='none',600);
-      },
-      (xhr)=>{ if(xhr.total){ pctEl.textContent='Loading 3D · '+Math.round(xhr.loaded/xhr.total*100)+'%'; } },
-      (err)=>{ pctEl.textContent='Could not load model'; console.error(err); }
-    );
+          <!-- Grand Rapids pulsing dot -->
+          <circle cx="182.8" cy="239.6" r="6" fill="#1A6FC4" opacity="0.8">
+            <animate attributeName="r" values="5;9;5" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="182.8" cy="239.6" r="4" fill="#3B8DE0"/>
 
-    const KF={ x:[0,1.5,-1.1,0], y:[0,0,0.15,0], s:[1,1.0,1.45,1.05] };
-    const lerp=(a,b,t)=>a+(b-a)*t;
-    const sample=(a,p)=>{const t=p*(a.length-1);const i=Math.min(Math.floor(t),a.length-2);return lerp(a[i],a[i+1],t-i);};
+          <!-- Label line -->
+          <line x1="188" y1="236" x2="215" y2="218" stroke="rgba(26,111,196,0.5)" stroke-width="1"/>
+          <!-- Label text -->
+          <text x="218" y="215" fill="#4B5563" font-family="'Barlow Condensed', sans-serif" font-size="11" font-weight="600" letter-spacing="0.12em">YOUR CITY</text>
+          <text x="218" y="228" fill="rgba(75,85,99,0.6)" font-family="'DM Sans', sans-serif" font-size="8.5">0° N, 85.6681° W</text>
+        </svg>
+        <!-- "Est. 1990" below map -->
+        <div class="text-center mt-3">
+          <span class="font-display text-[10px] tracking-[0.3em] uppercase text-alloy/40">Est. 1990</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    let target=0,cur=0;
-    function onScroll(){
-      const max=document.body.scrollHeight-innerHeight;
-      target=max>0?Math.min(Math.max(scrollY/max,0),1):0;
-      document.querySelectorAll('.scene .inner').forEach(el=>{
-        const r=el.getBoundingClientRect();const c=r.top+r.height/2;
-        const d=Math.abs(c-innerHeight/2)/(innerHeight*0.6);const o=Math.max(0,1-d);
-        el.style.opacity=o;el.style.transform='translateY('+((1-o)*26)+'px)';
+  <!-- Logo divider -->
+  <div class="bg-midnight py-6 flex items-center justify-center">
+    <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gunmetal"></div>
+    <span class="font-display font-700 uppercase tracking-[0.25em] text-gunmetal opacity-50" style="font-size:.85rem;">APEX SYSTEMS</span>
+    <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gunmetal"></div>
+  </div>
+
+  <!-- ========== PRODUCTS SECTION ========== -->
+  <section id="products" class="relative py-24 lg:py-36 bg-midnight">
+    <!-- Top border accent -->
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gunmetal to-transparent"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="mb-16 lg:mb-24 reveal">
+        <div class="flex items-center gap-3 mb-4">
+          
+          <span class="font-display text-xs font-500 tracking-[0.25em] uppercase text-forge">001 / Products</span>
+        </div>
+        <h2 class="font-display font-800 uppercase tracking-[-0.02em] text-chrome mb-6" style="font-size: clamp(2rem, 5vw, 4rem); line-height: 0.95;">
+          Three Divisions.<br>One Source.
+        </h2>
+        <p class="font-body text-alloy text-lg max-w-xl" style="line-height: 1.7;">
+          From powder coating to air filtration to liquid finishing — we deliver complete systems backed by industry-leading manufacturers.
+        </p>
+      </div>
+
+      <!-- Product Cards Grid -->
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8 stagger">
+
+        <!-- Powder Coating Card -->
+        <a href="powder-coating.html" class="product-card group relative block rounded-xl overflow-hidden reveal" style="background: #0A0E14;">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="https://omega-industries-website.vercel.app/frames/powder/frame_0001.jpg" alt="Powder Coating Equipment" class="card-image w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0E14] via-[#0A0E14]/40 to-transparent"></div>
+          </div>
+          <div class="relative p-6 lg:p-8 -mt-16 z-10">
+            <span class="font-display text-[10px] tracking-[0.3em] uppercase text-forge block mb-2">Turn-Key Systems</span>
+            <h3 class="font-display font-700 text-2xl lg:text-3xl uppercase tracking-tight text-white mb-3">Powder Coating</h3>
+            <p class="font-body text-gray-400 text-sm leading-relaxed mb-4">Complete conveyor turn-key systems with Wagner technology and Fanuc robotic automation.</p>
+            <span class="flex items-center gap-2 font-display text-xs tracking-[0.2em] uppercase text-forge">
+              Explore
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Air Filters Card -->
+        <a href="air-filters.html" class="product-card group relative block rounded-xl overflow-hidden reveal" style="background: #0A0E14;">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="https://omega-industries-website.vercel.app/frames/filters/frame_0192.jpg" alt="Industrial Air Filters" class="card-image w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0E14] via-[#0A0E14]/40 to-transparent"></div>
+          </div>
+          <div class="relative p-6 lg:p-8 -mt-16 z-10">
+            <span class="font-display text-[10px] tracking-[0.3em] uppercase text-forge block mb-2">Complete Filtration</span>
+            <h3 class="font-display font-700 text-2xl lg:text-3xl uppercase tracking-tight text-white mb-3">Air Filters</h3>
+            <p class="font-body text-gray-400 text-sm leading-relaxed mb-4">HVAC, industrial, automotive finishing, commercial building, dust cartridge, and metal washable filters.</p>
+            <span class="flex items-center gap-2 font-display text-xs tracking-[0.2em] uppercase text-forge">
+              Explore
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Liquid Finishing Card -->
+        <a href="liquid-finishing.html" class="product-card group relative block rounded-xl overflow-hidden reveal" style="background: #0A0E14;">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="https://omega-industries-website.vercel.app/frames/liquid/frame_0001.jpg" alt="Liquid Finishing Equipment" class="card-image w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0E14] via-[#0A0E14]/40 to-transparent"></div>
+          </div>
+          <div class="relative p-6 lg:p-8 -mt-16 z-10">
+            <span class="font-display text-[10px] tracking-[0.3em] uppercase text-forge block mb-2">Spray Systems</span>
+            <h3 class="font-display font-700 text-2xl lg:text-3xl uppercase tracking-tight text-white mb-3">Liquid Finishing</h3>
+            <p class="font-body text-gray-400 text-sm leading-relaxed mb-4">Turn-key liquid finishing systems for manual and automatic spraying — paint, stain, and adhesives.</p>
+            <span class="flex items-center gap-2 font-display text-xs tracking-[0.2em] uppercase text-forge">
+              Explore
+              <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS SECTION ========== -->
+  <section class="relative py-20 bg-steel texture-lines overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gunmetal to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gunmetal to-transparent"></div>
+    <!-- Watermark logo -->
+    <img src="https://omega-industries-website.vercel.app/brand_assets/omega_logo3_op_1188x325.jpg" alt="" aria-hidden="true" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] opacity-[0.04] pointer-events-none select-none" style="mix-blend-mode: multiply;">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 stagger">
+        <div class="text-center reveal">
+          <span class="stat-value font-display font-800 block" style="font-size: clamp(2.5rem, 5vw, 4rem);">30+</span>
+          <span class="font-display text-xs tracking-[0.25em] uppercase text-alloy mt-2 block">Years Experience</span>
+        </div>
+        <div class="text-center reveal">
+          <span class="stat-value font-display font-800 block" style="font-size: clamp(2.5rem, 5vw, 4rem);">7</span>
+          <span class="font-display text-xs tracking-[0.25em] uppercase text-alloy mt-2 block">Brand Partners</span>
+        </div>
+        <div class="text-center reveal">
+          <span class="stat-value font-display font-800 block" style="font-size: clamp(2.5rem, 5vw, 4rem);">3</span>
+          <span class="font-display text-xs tracking-[0.25em] uppercase text-alloy mt-2 block">Product Divisions</span>
+        </div>
+        <div class="text-center reveal">
+          <span class="stat-value font-display font-800 block" style="font-size: clamp(2.5rem, 5vw, 4rem);">1</span>
+          <span class="font-display text-xs tracking-[0.25em] uppercase text-alloy mt-2 block">Source For All</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARTNERS SECTION ========== -->
+  <section class="relative py-24 lg:py-36 bg-midnight overflow-hidden">
+    <!-- Large watermark logo behind partners -->
+    <img src="https://omega-industries-website.vercel.app/brand_assets/omega_logo3_op_1188x325.jpg" alt="" aria-hidden="true" class="absolute right-[-100px] top-1/2 -translate-y-1/2 w-[600px] opacity-[0.03] pointer-events-none select-none rotate-[-8deg]" style="mix-blend-mode: multiply;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          
+          <span class="font-display text-xs font-500 tracking-[0.25em] uppercase text-forge">002 / Partners</span>
+        </div>
+        <h2 class="font-display font-800 uppercase tracking-[-0.02em] text-chrome" style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 0.95;">
+          Trusted By Industry Leaders
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 stagger">
+        <div class="pixel-card reveal" data-colors='["#FFCB00","#000000","#E5B800"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/wagner-logo.png" alt="Wagner" class="logo-img">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#CE0029","#E0002B","#9B001F"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/fanuc-logo.png" alt="Fanuc" class="logo-img" style="max-height:70px;">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#0099D8","#00B2E3","#4DB848"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/koch-filter-logo.png" alt="Koch Filter" class="logo-img">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#0072B8","#0099D8","#005A8C"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/donaldson-torit-logo.png" alt="Donaldson Torit" class="logo-img">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#CC2229","#333333","#999999"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/gfs-logo.png" alt="Global Finishing Solutions" class="logo-img">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#00468E","#00152A","#0066CC"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/durr-logo.png" alt="D&uuml;rr" class="logo-img">
+        </div>
+        <div class="pixel-card reveal" data-colors='["#CC0000","#990000","#333333"]'>
+          <canvas></canvas>
+          <img src="https://omega-industries-website.vercel.app/brand_assets/ca-technologies-logo.png" alt="C.A. Technologies" class="logo-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT SECTION ========== -->
+  <section id="contact" class="relative py-24 lg:py-36 bg-steel overflow-hidden">
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gunmetal to-transparent"></div>
+    <!-- Background watermark -->
+    <img src="https://omega-industries-website.vercel.app/brand_assets/omega_logo3_op_1188x325.jpg" alt="" aria-hidden="true" class="absolute left-[-80px] bottom-[-40px] w-[450px] opacity-[0.03] pointer-events-none select-none rotate-[12deg]" style="mix-blend-mode: multiply;">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
+
+        <!-- Contact Info -->
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            
+            <span class="font-display text-xs font-500 tracking-[0.25em] uppercase text-forge">003 / Contact</span>
+          </div>
+          <h2 class="font-display font-800 uppercase tracking-[-0.02em] text-chrome mb-8" style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 0.95;">
+            Let&rsquo;s Build<br>Your System
+          </h2>
+          <p class="font-body text-alloy text-lg mb-10" style="line-height: 1.7;">
+            Call or send us an email and we&rsquo;ll return the information to you within 24 hours.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-iron flex items-center justify-center flex-shrink-0 mt-1">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2D8F4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <span class="font-display text-xs tracking-[0.2em] uppercase text-alloy block mb-1">Phone</span>
+                <span class="font-body text-chrome">Your number here</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-iron flex items-center justify-center flex-shrink-0 mt-1">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2D8F4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <span class="font-display text-xs tracking-[0.2em] uppercase text-alloy block mb-1">Email</span>
+                <span class="font-body text-chrome">your@email.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="reveal" style="transition-delay: 0.15s;">
+          <form class="space-y-5" onsubmit="event.preventDefault(); alert('Thank you! We will be in touch within 24 hours.');">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label for="name" class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-2">Name</label>
+                <input type="text" id="name" required class="form-input w-full px-4 py-3 rounded-lg text-chrome font-body text-sm" placeholder="Your name">
+              </div>
+              <div>
+                <label for="phone" class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-2">Phone</label>
+                <input type="tel" id="phone" class="form-input w-full px-4 py-3 rounded-lg text-chrome font-body text-sm" placeholder="(555) 000-0000">
+              </div>
+            </div>
+            <div>
+              <label for="email" class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-2">Email</label>
+              <input type="email" id="email" required class="form-input w-full px-4 py-3 rounded-lg text-chrome font-body text-sm" placeholder="you@company.com">
+            </div>
+            <div>
+              <label for="interest" class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-2">Interest</label>
+              <select id="interest" class="form-input w-full px-4 py-3 rounded-lg text-chrome font-body text-sm appearance-none cursor-pointer">
+                <option value="">Select a product area</option>
+                <option value="powder">Powder Coating</option>
+                <option value="filters">Air Filters</option>
+                <option value="liquid">Liquid Finishing</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="message" class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-2">Message</label>
+              <textarea id="message" rows="4" required class="form-input w-full px-4 py-3 rounded-lg text-chrome font-body text-sm resize-none" placeholder="Tell us about your project..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full bg-forge text-white font-display font-700 text-sm tracking-wider uppercase px-8 py-4 rounded-lg">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-midnight py-16 border-t border-gunmetal/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <!-- Logo & tagline -->
+        <div class="lg:col-span-2">
+          <span class="font-display font-800 uppercase tracking-widest text-chrome block mb-4" style="font-size:1.5rem;letter-spacing:.18em;">APEX SYSTEMS</span>
+          <p class="font-body text-alloy text-sm max-w-md" style="line-height: 1.7;">
+            Any and all filtration and finishing equipment needs under one roof. Serving West Michigan and beyond since 1990.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <span class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-4">Products</span>
+          <ul class="space-y-3">
+            <li><a href="powder-coating.html" class="font-body text-sm text-alloy hover:text-forge transition-colors">Powder Coating</a></li>
+            <li><a href="air-filters.html" class="font-body text-sm text-alloy hover:text-forge transition-colors">Air Filters</a></li>
+            <li><a href="liquid-finishing.html" class="font-body text-sm text-alloy hover:text-forge transition-colors">Liquid Finishing</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <span class="font-display text-[10px] tracking-[0.25em] uppercase text-alloy block mb-4">Contact</span>
+          <ul class="space-y-3">
+            <li><span class="font-body text-sm text-alloy">Your phone number</span></li>
+            <li><span class="font-body text-sm text-alloy">Your email address</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gunmetal/30 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span class="font-body text-xs text-rivet">&copy; 2024 Apex Systems. All rights reserved.</span>
+        
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // ========== SHADER BACKGROUND ==========
+    (function() {
+      const container = document.getElementById('shader-bg');
+      if (!container) return;
+
+      const vertexShader = `
+        void main() {
+          gl_Position = vec4(position, 1.0);
+        }
+      `;
+
+      const fragmentShader = `
+        #define TWO_PI 6.2831853072
+        #define PI 3.14159265359
+
+        precision highp float;
+        uniform vec2 resolution;
+        uniform float time;
+
+        void main(void) {
+          vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+          float t = time * 0.05;
+          float lineWidth = 0.002;
+
+          vec3 color = vec3(0.0);
+          for(int j = 0; j < 3; j++){
+            for(int i = 0; i < 5; i++){
+              color[j] += lineWidth * float(i*i) / abs(fract(t - 0.01*float(j) + float(i)*0.01) * 5.0 - length(uv) + mod(uv.x + uv.y, 0.2));
+            }
+          }
+
+          gl_FragColor = vec4(1.0 - color[0]*0.7, 1.0 - color[1]*0.7, 1.0 - color[2]*0.7, 1.0);
+        }
+      `;
+
+      const camera = new THREE.Camera();
+      camera.position.z = 1;
+
+      const scene = new THREE.Scene();
+      const geometry = new THREE.PlaneGeometry(2, 2);
+
+      const uniforms = {
+        time: { type: 'f', value: 1.0 },
+        resolution: { type: 'v2', value: new THREE.Vector2() }
+      };
+
+      const material = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader
       });
-    }
-    addEventListener('scroll',onScroll,{passive:true});
-    function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(canvas.width!==w||canvas.height!==h){renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}}
-    addEventListener('resize',resize);
 
-    const clock=new THREE.Clock();
-    function tick(){
-      const dt=clock.getDelta();
-      cur+=(target-cur)*Math.min(1,dt*4);
-      product.position.x=sample(KF.x,cur);
-      product.position.y=sample(KF.y,cur)+Math.sin(clock.elapsedTime*0.8)*0.04;
-      product.scale.setScalar(sample(KF.s,cur));
-      product.rotation.y=cur*Math.PI*2.2 + clock.elapsedTime*0.12;
-      shadow.position.x=product.position.x;
-      resize(); renderer.render(scene,camera); requestAnimationFrame(tick);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
+
+      function onResize() {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        renderer.setSize(w, h);
+        uniforms.resolution.value.x = renderer.domElement.width;
+        uniforms.resolution.value.y = renderer.domElement.height;
+      }
+      onResize();
+      window.addEventListener('resize', onResize);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        uniforms.time.value += 0.05;
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const bar1 = document.getElementById('bar1');
+      const bar2 = document.getElementById('bar2');
+      const bar3 = document.getElementById('bar3');
+      menu.classList.toggle('open');
+      if (menu.classList.contains('open')) {
+        bar1.style.transform = 'rotate(45deg) translate(4px, 4px)';
+        bar2.style.opacity = '0';
+        bar3.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+        document.body.style.overflow = 'hidden';
+      } else {
+        bar1.style.transform = '';
+        bar2.style.opacity = '';
+        bar3.style.transform = '';
+        document.body.style.overflow = '';
+      }
     }
-    onScroll(); resize(); tick();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Pixel canvas animation for partner cards
+    (function() {
+      const GAP = 6;
+      const SPEED = 0.03;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function createPixel(ctx, canvas, x, y, color, delay) {
+        const rand = (min, max) => Math.random() * (max - min) + min;
+        const speed = rand(0.1, 0.9) * SPEED;
+        const p = {
+          x, y, color, size: 0,
+          sizeStep: Math.random() * 0.4,
+          minSize: 0.5,
+          maxSizeInt: 2,
+          maxSize: rand(0.5, 2),
+          delay: reducedMotion ? 0 : delay,
+          counter: 0,
+          counterStep: Math.random() * 4 + (canvas.width + canvas.height) * 0.01,
+          isIdle: false, isReverse: false, isShimmer: false,
+          speed,
+          draw() {
+            const off = p.maxSizeInt * 0.5 - p.size * 0.5;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x + off, p.y + off, p.size, p.size);
+          },
+          appear() {
+            p.isIdle = false;
+            if (p.counter <= p.delay) { p.counter += p.counterStep; return; }
+            if (p.size >= p.maxSize) p.isShimmer = true;
+            if (p.isShimmer) p.shimmer(); else p.size += p.sizeStep;
+            p.draw();
+          },
+          disappear() {
+            p.isShimmer = false; p.counter = 0;
+            if (p.size <= 0) { p.isIdle = true; return; }
+            p.size -= 0.1; p.draw();
+          },
+          shimmer() {
+            if (p.size >= p.maxSize) p.isReverse = true;
+            else if (p.size <= p.minSize) p.isReverse = false;
+            if (p.isReverse) p.size -= speed; else p.size += speed;
+          }
+        };
+        return p;
+      }
+
+      document.querySelectorAll('.pixel-card').forEach(card => {
+        const canvas = card.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        const colors = JSON.parse(card.dataset.colors || '["#111827"]');
+        card.style.setProperty('--brand-color', colors[0]);
+        let pixels = [];
+        let animId = 0;
+        let lastFrame = performance.now();
+
+        function init() {
+          const { width, height } = card.getBoundingClientRect();
+          const w = Math.floor(width), h = Math.floor(height);
+          canvas.width = w; canvas.height = h;
+          pixels = [];
+          for (let x = 0; x < w; x += GAP) {
+            for (let y = 0; y < h; y += GAP) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              const dx = x - w / 2, dy = y - h / 2;
+              const delay = reducedMotion ? 0 : Math.sqrt(dx * dx + dy * dy);
+              pixels.push(createPixel(ctx, canvas, x, y, color, delay));
+            }
+          }
+        }
+
+        function animate(mode) {
+          cancelAnimationFrame(animId);
+          const interval = 1000 / 60;
+          function loop() {
+            animId = requestAnimationFrame(loop);
+            const now = performance.now();
+            if (now - lastFrame < interval) return;
+            lastFrame = now;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const px of pixels) px[mode]();
+            if (pixels.every(px => px.isIdle)) cancelAnimationFrame(animId);
+          }
+          animId = requestAnimationFrame(loop);
+        }
+
+        init();
+        const ro = new ResizeObserver(() => init());
+        ro.observe(card);
+        card.addEventListener('mouseenter', () => animate('appear'));
+        card.addEventListener('mouseleave', () => animate('disappear'));
+      });
+    })();
   </script>
-</body></html>
+</body>
+</html>
