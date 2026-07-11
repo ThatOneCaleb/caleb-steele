@@ -145,6 +145,20 @@
   @keyframes aurora{to{transform:translate3d(0,-7%,0) scale(1.12) rotate(7deg)}}
   .contact>.reveal{position:relative;z-index:1}
   @media(prefers-reduced-motion:reduce){.marquee .track,.aurora,.hero h1 em{animation:none}.hero-inner>*{animation-duration:.01s}}
+
+  /* === svg animated underline on hero === */
+  .em-wrap{position:relative;display:inline-block}
+  .hero-underline{position:absolute;bottom:-10px;left:0;width:100%;height:14px;overflow:visible;pointer-events:none}
+  .hero-underline path{stroke-dasharray:500;stroke-dashoffset:500;animation:drawLine 1.2s cubic-bezier(.2,.7,.2,1) 1.2s forwards}
+  @keyframes drawLine{to{stroke-dashoffset:0}}
+
+  /* === word-by-word clip reveal on section headings === */
+  .wr{overflow:hidden;display:inline-block;vertical-align:bottom}
+  .ww{display:inline-block;transform:translateY(110%);transition:transform .65s cubic-bezier(.2,.7,.2,1),opacity .4s ease;opacity:0}
+  .ww.in{transform:translateY(0);opacity:1}
+
+  /* === service number roll === */
+  .svc .num{font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -161,7 +175,7 @@
     <canvas id="scene"></canvas>
     <div class="hero-inner">
       <div class="eyebrow">Web Designer · Rockford, MI</div>
-      <h1>Websites worth<br><em>showing off.</em></h1>
+      <h1>Websites worth<br><span class="em-wrap"><em>showing off.</em><svg class="hero-underline" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="uGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d5cff"/><stop offset="100%" stop-color="#08b2c4"/></linearGradient></defs><path d="M 0,7 Q 75,1 150,7 Q 225,13 300,7" stroke="url(#uGrad)" stroke-width="2.5" fill="none"/></svg></span></h1>
       <p>I build fast, mobile-ready websites for local businesses that look good and help you get more customers.</p>
       <div class="cta">
         <a href="#contact" class="btn btn-primary">Get a free preview</a>
@@ -351,6 +365,54 @@
         c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
         c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
       });
+    });
+
+    // Text scramble on eyebrow badge
+    (function(){
+      const el = document.querySelector('.eyebrow');
+      const original = el.textContent;
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let iter = 0;
+      const iv = setInterval(()=>{
+        el.textContent = original.split('').map((c,i)=>{
+          if(i < iter) return c;
+          return (c === ' ' || c === '·') ? c : chars[Math.floor(Math.random()*chars.length)];
+        }).join('');
+        if(iter >= original.length) clearInterval(iv);
+        iter += 0.5;
+      }, 28);
+    })();
+
+    // Word-by-word clip reveal on section headings
+    document.querySelectorAll('.lead').forEach(h=>{
+      const words = h.textContent.trim().split(/\s+/);
+      h.innerHTML = words.map(w=>`<span class="wr"><span class="ww">${w}</span></span>`).join(' ');
+    });
+    const wordObs = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{
+        if(!en.isIntersecting) return;
+        en.target.querySelectorAll('.ww').forEach((w,i)=>{
+          setTimeout(()=>w.classList.add('in'), i * 75);
+        });
+        wordObs.unobserve(en.target);
+      });
+    },{threshold:0.2});
+    document.querySelectorAll('.lead').forEach(h=>wordObs.observe(h));
+
+    // Number roll-up on service items
+    document.querySelectorAll('.svc .num').forEach(el=>{
+      const target = parseInt(el.textContent, 10);
+      el.textContent = '00';
+      const numObs = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(!en.isIntersecting) return;
+          let cur = 0;
+          const step = ()=>{ el.textContent = String(cur).padStart(2,'0'); if(cur < target){ cur++; setTimeout(step, 90); } };
+          step();
+          numObs.unobserve(en.target);
+        });
+      },{threshold:0.6});
+      numObs.observe(el);
     });
   </script>
 </body>
